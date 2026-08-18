@@ -1,0 +1,3 @@
+# Pre-launch. Remove this file when the gate comes down.
+User-agent: *
+Disallow: /

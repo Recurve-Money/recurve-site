@@ -1,0 +1,166 @@
+/* Pre-launch gate. Paired with gate.js; delete both to remove. */
+
+/* Hidden until the inline head script clears the flag, so gated content never
+   flashes on a slow connection. */
+html.gated body > *:not(#gate) {
+  display: none !important;
+}
+
+html.gated,
+html.gated body {
+  overflow: hidden;
+  height: 100%;
+}
+
+#gate {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+#gate.gate-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.gate-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url("/img/gate-bg.jpg");
+  background-size: cover;
+  background-position: center center;
+  transform: scale(1.04);
+}
+
+.gate-veil {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 90% at 50% 45%, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 62%),
+    linear-gradient(to bottom, rgba(10, 10, 10, 0.16) 0%, rgba(10, 10, 10, 0.05) 40%, rgba(10, 10, 10, 0.3) 100%);
+}
+
+.gate-inner {
+  position: relative;
+  text-align: center;
+  max-width: 420px;
+  width: 100%;
+}
+
+.gate-inner.shake {
+  animation: gate-shake 0.36s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+@keyframes gate-shake {
+  10%, 90% { transform: translateX(-2px); }
+  20%, 80% { transform: translateX(4px); }
+  30%, 50%, 70% { transform: translateX(-7px); }
+  40%, 60% { transform: translateX(7px); }
+}
+
+.gate-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  color: #0a0a0a;
+}
+
+.gate-brand svg {
+  height: 40px;
+  width: auto;
+}
+
+.gate-brand span {
+  font-family: "Outfit", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 34px;
+  font-weight: 500;
+  letter-spacing: -0.032em;
+}
+
+.gate-copy {
+  font-family: "Outfit", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  color: rgba(10, 10, 10, 0.62);
+  margin-bottom: 30px;
+  letter-spacing: -0.006em;
+}
+
+.gate-form {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.gate-form input {
+  flex: 1;
+  min-width: 0;
+  font-family: "Outfit", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  padding: 13px 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(10, 10, 10, 0.16);
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #0a0a0a;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.gate-form input::placeholder {
+  color: rgba(10, 10, 10, 0.4);
+}
+
+.gate-form input:focus {
+  border-color: #0a0a0a;
+  background: #fff;
+}
+
+.gate-form button {
+  font-family: "Outfit", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 13px 26px;
+  border-radius: 999px;
+  border: 0;
+  cursor: pointer;
+  background: linear-gradient(to bottom, #2b2b2b, #000);
+  color: #fff;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.28);
+  transition: opacity 0.2s;
+  white-space: nowrap;
+}
+
+.gate-form button:hover {
+  opacity: 0.9;
+}
+
+.gate-error {
+  font-family: "Outfit", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  color: #8c2f1c;
+  margin-top: 14px;
+  min-height: 20px;
+}
+
+@media (max-width: 520px) {
+  .gate-brand svg { height: 32px; }
+  .gate-brand span { font-size: 28px; }
+  .gate-form { flex-direction: column; }
+  .gate-form button { width: 100%; }
+}
+
+@media (max-width:900px){
+  /* A phone gets the 900px plate. The full one is 2400px of painting behind a
+     form that occupies a fifth of the screen. */
+  .gate-bg{background-image:url("/img/gate-bg-sm.jpg")}
+  .gate-inner{max-width:none}
+}
